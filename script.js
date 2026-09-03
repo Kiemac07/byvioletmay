@@ -16,65 +16,92 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const lightbox = document.querySelector('.lightbox');
-  const boxImage = lightbox?.querySelector('.lightbox-image');
-  const boxVideo = lightbox?.querySelector('.lightbox-video');
-  const closeBtn = lightbox?.querySelector('.lightbox-close');
+  if (!lightbox) return;
+  const boxImage = lightbox.querySelector('.lightbox-image');
+  const boxVideo = lightbox.querySelector('.lightbox-video');
+  const closeBtn = lightbox.querySelector('.lightbox-close');
+  const prevBtn = lightbox.querySelector('.lightbox-prev');
+  const nextBtn = lightbox.querySelector('.lightbox-next');
+  const items = [...document.querySelectorAll('[data-gallery-item="true"]')];
+  let currentIndex = -1;
+  let touchStartX = 0;
 
   function closeLightbox() {
-    if (!lightbox) return;
     if (boxVideo) {
       boxVideo.pause();
       boxVideo.currentTime = 0;
-      try { if (document.fullscreenElement) document.exitFullscreen(); } catch(e) {}
+      boxVideo.removeAttribute('src');
+      boxVideo.load();
     }
     lightbox.classList.remove('open');
-    lightbox.setAttribute('aria-hidden','true');
+    lightbox.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
     if (boxImage) boxImage.removeAttribute('src');
-    if (boxVideo) boxVideo.removeAttribute('src');
+    currentIndex = -1;
   }
 
-  function openImage(src, alt) {
-    if (!lightbox || !boxImage) return;
-    if (boxVideo) boxVideo.style.display='none';
-    boxImage.style.display='block';
-    boxImage.src=src;
-    boxImage.alt=alt || '';
+  function updateNav() {
+    const show = items.length > 1;
+    if (prevBtn) prevBtn.hidden = !show;
+    if (nextBtn) nextBtn.hidden = !show;
+  }
+
+  async function showItem(index) {
+    if (!items.length) return;
+    currentIndex = (index + items.length) % items.length;
+    const el = items[currentIndex];
+    const imageSrc = el.dataset.lightboxImage;
+    const videoSrc = el.dataset.lightboxVideo;
+
+    if (boxVideo) {
+      boxVideo.pause();
+      boxVideo.removeAttribute('src');
+      boxVideo.load();
+      boxVideo.style.display = 'none';
+    }
+    if (boxImage) {
+      boxImage.removeAttribute('src');
+      boxImage.style.display = 'none';
+    }
+
+    if (imageSrc && boxImage) {
+      boxImage.src = imageSrc;
+      boxImage.alt = el.dataset.alt || '';
+      boxImage.style.display = 'block';
+    } else if (videoSrc && boxVideo) {
+      boxVideo.src = videoSrc;
+      boxVideo.controls = false;
+      boxVideo.loop = false;
+      boxVideo.style.display = 'block';
+      try { await boxVideo.play(); } catch (e) {}
+    }
+    updateNav();
+  }
+
+  function openAt(index) {
     lightbox.classList.add('open');
-    lightbox.setAttribute('aria-hidden','false');
+    lightbox.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
+    showItem(index);
   }
 
-  async function openVideo(src) {
-    if (!lightbox || !boxVideo) return;
-    if (boxImage) boxImage.style.display='none';
-    boxVideo.style.display='block';
-    boxVideo.src=src;
-    boxVideo.controls=true;
-    boxVideo.loop=false;
-    lightbox.classList.add('open');
-    lightbox.setAttribute('aria-hidden','false');
-    document.body.classList.add('modal-open');
-    try {
-      if (boxVideo.requestFullscreen) await boxVideo.requestFullscreen();
-      else if (boxVideo.webkitEnterFullscreen) boxVideo.webkitEnterFullscreen();
-    } catch(e) {}
-    try { await boxVideo.play(); } catch(e) {}
-  }
-
-  document.querySelectorAll('[data-lightbox-image]').forEach(el => {
-    el.addEventListener('click', () => openImage(el.dataset.lightboxImage, el.dataset.alt));
-  });
-  document.querySelectorAll('[data-lightbox-video]').forEach(el => {
-    el.addEventListener('click', () => openVideo(el.dataset.lightboxVideo));
-  });
-
-  if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-  if (lightbox) lightbox.addEventListener('click', e => {
-    if (e.target === lightbox) closeLightbox();
-  });
+  items.forEach((el, index) => el.addEventListener('click', () => openAt(index)));
+  closeBtn?.addEventListener('click', closeLightbox);
+  prevBtn?.addEventListener('click', e => { e.stopPropagation(); showItem(currentIndex - 1); });
+  nextBtn?.addEventListener('click', e => { e.stopPropagation(); showItem(currentIndex + 1); });
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && lightbox?.classList.contains('open')) closeLightbox();
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') showItem(currentIndex - 1);
+    if (e.key === 'ArrowRight') showItem(currentIndex + 1);
   });
-  if (boxVideo) boxVideo.addEventListener('ended', closeLightbox);
+  boxVideo?.addEventListener('ended', closeLightbox);
+  lightbox.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive:true});
+  lightbox.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(dx) < 55 || currentIndex < 0) return;
+    showItem(currentIndex + (dx < 0 ? 1 : -1));
+  }, {passive:true});
+  updateNav();
 });
