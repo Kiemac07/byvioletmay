@@ -43,7 +43,7 @@ em{font-style:italic;color:var(--brown)}
 .button-dark{background:var(--deep);color:var(--paper)} .button-light{background:var(--paper);color:var(--deep)}
 .text-link{font-size:10px;text-transform:uppercase;letter-spacing:.16em;font-weight:700;color:var(--brown);display:inline-flex;gap:14px;align-items:center}
 .text-link span{font-size:18px;transition:.2s}.text-link:hover span{transform:translateX(4px)}
-.hero-stamp{position:absolute;right:6%;bottom:8%;z-index:3;border:1px solid rgba(255,255,255,.55);color:white;width:132px;height:132px;border-radius:50%;display:grid;place-items:center;text-align:center;font-family:var(--serif);font-size:20px;line-height:1;background:rgba(59,38,39,.18);backdrop-filter:blur(8px)}
+.hero-stamp{position:absolute;right:6%;bottom:8%;z-index:3;width:150px;height:150px;display:grid;place-items:center}
 .section{padding:115px 5vw;max-width:var(--max);margin:auto}
 .section-full{max-width:none}
 .section-tint{background:#e3dcd1;max-width:none}
@@ -100,11 +100,11 @@ blockquote{font-family:var(--serif);font-size:42px;line-height:1.08;color:var(--
 .about-copy h2{margin-bottom:28px}.about-copy p{max-width:590px}
 .about-facts{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 34px}
 .fact{border:1px solid var(--line);padding:11px 14px;text-transform:uppercase;letter-spacing:.13em;font-size:9px;color:var(--brown)}
-.promise-grid{display:grid;grid-template-columns:1fr 1fr;gap:9vw}
-.promise-grid h2{color:var(--paper)}
-.promise-list>div{display:grid;grid-template-columns:45px 1fr;border-top:1px solid rgba(238,233,223,.2);padding:22px 0}
-.promise-list>div:last-child{border-bottom:1px solid rgba(238,233,223,.2)}
-.promise-list span{font-size:10px;letter-spacing:.15em;color:#c9b9ad}.promise-list p{margin:0;color:#d6ccc2}.promise-list strong{color:var(--paper)}
+.promise-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:8vw;align-items:start}
+.promise-grid h2{color:var(--paper);max-width:560px}
+.promise-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.promise-list>div{border-top:1px solid rgba(238,233,223,.22);border-bottom:1px solid rgba(238,233,223,.22);padding:26px 20px;min-height:190px;display:flex;align-items:flex-start}
+.promise-list p{margin:0;color:#d6ccc2;font-size:16px;line-height:1.55}.promise-list strong{display:block;color:var(--paper);font-size:18px;margin-bottom:10px}
 .services-photo{position:relative;min-height:500px;overflow:hidden}
 .services-photo img{width:100%;height:560px;object-fit:cover;object-position:center 45%}
 .services-photo .overlay-title{position:absolute;inset:auto 6vw 45px;color:white;font-family:var(--serif);font-size:clamp(50px,8vw,105px);line-height:.8}
@@ -138,6 +138,9 @@ blockquote{font-family:var(--serif);font-size:42px;line-height:1.08;color:var(--
  .hero{display:block;min-height:760px}.hero-photo{width:100%;height:100%;opacity:.82}.hero-photo::after{background:linear-gradient(90deg,var(--cream) 0%,rgba(238,233,223,.78) 40%,rgba(238,233,223,.22) 100%)}
  .hero-copy{padding:100px 7vw;min-height:760px;display:flex;flex-direction:column;justify-content:center}.hero-stamp{right:7%;bottom:6%}
  .section{padding:90px 7vw}.intro-grid,.about-feature,.promise-grid,.pricing,.service-note{grid-template-columns:1fr;gap:50px}
+ .promise-list{grid-template-columns:1fr;gap:0}
+ .promise-list>div{min-height:0;padding:24px 0}
+ .promise-list p{font-size:17px}
  .split-photo{display:flex;flex-direction:column}.split-photo .photo-side{min-height:480px}.split-copy{padding:85px 7vw}
  .portfolio-grid{grid-template-columns:1fr 1fr}.portfolio-item{grid-column:span 1!important;grid-row:auto!important;min-height:280px}.portfolio-item img,.portfolio-item video{min-height:280px}
  .review-grid,.booking-grid{grid-template-columns:1fr}.review-grid figure:nth-child(2){transform:none}
@@ -159,7 +162,7 @@ blockquote{font-family:var(--serif);font-size:42px;line-height:1.08;color:var(--
 
 /* ByVioletMay refinements */
 .hero-home{min-height:650px}
-.hero-stamp{width:150px;height:150px;padding:12px;background:rgba(59,38,39,.12)}
+.hero-stamp{width:150px;height:150px;padding:0;background:transparent}
 .hero-stamp img{width:100%;height:100%;object-fit:contain;border-radius:50%}
 .services-photo{height:560px;min-height:560px;background-size:cover;background-position:center 45%;position:relative;overflow:hidden}
 .services-photo::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(59,38,39,.16),rgba(59,38,39,.02) 55%,rgba(59,38,39,.28))}
