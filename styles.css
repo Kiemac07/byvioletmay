@@ -372,3 +372,18 @@ blockquote{font-family:var(--serif);font-size:42px;line-height:1.08;color:var(--
     background:linear-gradient(90deg,rgba(238,233,223,.62) 0%,rgba(238,233,223,.25) 52%,rgba(238,233,223,.06) 100%);
   }
 }
+
+/* Final Services hero readability: soften the background image slightly so the copy stays clear. */
+.services-hero::before{
+  background:linear-gradient(90deg,rgba(238,233,223,.76) 0%,rgba(238,233,223,.50) 40%,rgba(238,233,223,.16) 72%,rgba(35,24,24,.10) 100%);
+}
+@media(max-width:900px){
+  .services-hero::before{
+    background:linear-gradient(90deg,rgba(238,233,223,.74) 0%,rgba(238,233,223,.46) 48%,rgba(238,233,223,.12) 100%);
+  }
+}
+@media(max-width:560px){
+  .services-hero::before{
+    background:linear-gradient(90deg,rgba(238,233,223,.74) 0%,rgba(238,233,223,.44) 52%,rgba(238,233,223,.10) 100%);
+  }
+}
