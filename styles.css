@@ -339,3 +339,36 @@ blockquote{font-family:var(--serif);font-size:42px;line-height:1.08;color:var(--
   .services-hero h1{font-size:59px}
   .services-hero p:last-child{font-size:21px;line-height:1.18}
 }
+
+/* Final Services hero image fit — keep the existing layout, only correct the image scale/crop */
+.services-hero{
+  min-height:650px;
+  height:650px;
+  background-size:cover;
+  background-position:center center;
+}
+.services-hero::before{
+  background:linear-gradient(90deg,rgba(238,233,223,.68) 0%,rgba(238,233,223,.36) 40%,rgba(238,233,223,.10) 72%,rgba(35,24,24,.12) 100%);
+}
+@media(max-width:900px){
+  .services-hero{
+    min-height:520px;
+    height:520px;
+    background-size:cover;
+    background-position:center center;
+  }
+  .services-hero::before{
+    background:linear-gradient(90deg,rgba(238,233,223,.66) 0%,rgba(238,233,223,.30) 48%,rgba(238,233,223,.08) 100%);
+  }
+}
+@media(max-width:560px){
+  .services-hero{
+    min-height:470px;
+    height:470px;
+    background-size:cover;
+    background-position:center center;
+  }
+  .services-hero::before{
+    background:linear-gradient(90deg,rgba(238,233,223,.62) 0%,rgba(238,233,223,.25) 52%,rgba(238,233,223,.06) 100%);
+  }
+}

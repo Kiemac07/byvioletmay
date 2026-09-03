@@ -69,11 +69,24 @@ document.addEventListener('DOMContentLoaded', () => {
       boxImage.alt = el.dataset.alt || '';
       boxImage.style.display = 'block';
     } else if (videoSrc && boxVideo) {
-      boxVideo.src = videoSrc;
+      // Load the MP4 as a real video source and start it from the user's click.
+      // This is more reliable on desktop browsers/GitHub Pages than swapping
+      // the src and immediately trying to play an unloaded media element.
       boxVideo.controls = false;
       boxVideo.loop = false;
+      boxVideo.playsInline = true;
+      boxVideo.preload = 'metadata';
+      boxVideo.poster = el.querySelector('img')?.getAttribute('src') || '';
+      boxVideo.src = videoSrc;
       boxVideo.style.display = 'block';
-      try { await boxVideo.play(); } catch (e) {}
+      boxVideo.load();
+
+      const startPlayback = () => {
+        const result = boxVideo.play();
+        if (result && typeof result.catch === 'function') result.catch(() => {});
+      };
+      if (boxVideo.readyState >= 2) startPlayback();
+      else boxVideo.addEventListener('loadeddata', startPlayback, { once: true });
     }
     updateNav();
   }
