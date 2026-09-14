@@ -1,12 +1,12 @@
-# ByVioletMay website
+# ByVioletMaye website
 
-A clean, responsive multi-page website for ByVioletMay.
+A clean, responsive multi-page website for ByVioletMaye.
 
 Pages: Home, About, Services, Portfolio and Book Now.
 
 ## Contact
 - Email: violetmaye153@gmail.com
-- Instagram: @byvioletmay
+- Instagram: @byvioletmaye
 
 ## Portfolio behaviour
 Portfolio photos and videos open in a full-screen viewer with a close button and previous/next controls. On mobile, users can also swipe left/right. Videos play once and automatically close when finished.

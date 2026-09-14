@@ -160,7 +160,7 @@ blockquote{font-family:var(--serif);font-size:42px;line-height:1.08;color:var(--
 }
 
 
-/* ByVioletMay refinements */
+/* ByVioletMaye refinements */
 .hero-home{min-height:650px}
 .hero-stamp{width:150px;height:150px;padding:0;background:transparent}
 .hero-stamp img{width:100%;height:100%;object-fit:contain;border-radius:50%}
@@ -387,3 +387,6 @@ blockquote{font-family:var(--serif);font-size:42px;line-height:1.08;color:var(--
     background:linear-gradient(90deg,rgba(238,233,223,.74) 0%,rgba(238,233,223,.44) 52%,rgba(238,233,223,.10) 100%);
   }
 }
+
+/* Mobile: remove extra home hero logo */
+@media(max-width:900px){.hero-stamp{display:none}}
