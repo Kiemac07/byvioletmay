@@ -390,3 +390,6 @@ blockquote{font-family:var(--serif);font-size:42px;line-height:1.08;color:var(--
 
 /* Mobile: remove extra home hero logo */
 @media(max-width:900px){.hero-stamp{display:none}}
+
+/* Final ByVioletMaye adjustment: remove the decorative girl photo from the Book Now hero. */
+.booking-hero::after{display:none !important;}
